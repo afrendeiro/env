@@ -1,6 +1,8 @@
 [submodule "StartupFiles"]
 	path = StartupFiles
 	url = git@github.com:CamDavidsonPilon/StartupFiles.git
+	branch = master
 [submodule "dotfiles"]
 	path = dotfiles
 	url = git@github.com:afrendeiro/dotfiles.git
+	branch = master
