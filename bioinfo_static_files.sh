@@ -59,4 +59,17 @@ cd resources/ercc
 wget https://tools.lifetechnologies.com/content/sfs/manuals/cms_095047.txt
 wget https://tools.lifetechnologies.com/content/sfs/manuals/cms_095046.txt
 
+# get Fasta
+
+# Make bowtie2 index
+mkdir indexed_bowtie2
+cd indexed_bowtie2
+bowtie2-build -f ../ERCC92.fa ERCC92
+cd ..
+
+#
+
 cd ../..
+
+
+
