@@ -60,11 +60,13 @@ wget https://tools.lifetechnologies.com/content/sfs/manuals/cms_095047.txt
 wget https://tools.lifetechnologies.com/content/sfs/manuals/cms_095046.txt
 
 # get Fasta
+# remove poly-As; version *with* polyA is now called ERCC92_polyA
 
 # Make bowtie2 index
 mkdir indexed_bowtie2
 cd indexed_bowtie2
 bowtie2-build -f ../ERCC92.fa ERCC92
+bowtie2-build -f ../ERCC92_polyA.fa ERCC92_polyA
 cd ..
 
 #
