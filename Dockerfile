@@ -28,7 +28,7 @@ ENV LANG en_US.UTF-8
 ### Install
 # basics
 RUN apt-get update \
-    && apt-get install -y cmake git github-backup pandoc
+    && apt-get install -y wget cmake git github-backup pandoc
 
 ### generic bioinfo
 RUN apt-get install -y bedtools samtools picard-tools \
@@ -74,15 +74,18 @@ RUN Rscript -e 'source("http://bioconductor.org/biocLite.R"); \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 # R-dependent stuff
-RUN pip install rpy2
+RUN apt-get update \
+    && apt-get install -y \
+        libblas-dev \
+        liblapack-dev \
+    && apt-get install -y python-rpy2
 # RUN pip install cgat
 
 
 #### Bioinformatics tools
 ### General-purpose
 # sambamba
-RUN curl -L https://github.com/lomereiter/sambamba/releases/download/v0.5.2/sambamba_v0.5.2_linux.tar.bz2 \
-    > sambamba_v0.5.2_linux.tar.bz2 \
+RUN wget https://github.com/lomereiter/sambamba/releases/download/v0.5.2/sambamba_v0.5.2_linux.tar.bz2 \
     && tar -xjvf sambamba_v0.5.2_linux.tar.bz2 \
     && rm sambamba_v0.5.2_linux.tar.bz2 \
     && chmod +x sambamba_v0.5.2 \
@@ -94,15 +97,16 @@ RUN git clone git://github.com/pezmaster31/bamtools.git && cd bamtools \
     && cmake .. \
     && make \
     && cd .. \
-    && mv bin/bamtools-2.3.0 /usr/local/bin/bamtools \
+    && cp bin/bamtools* /usr/local/bin/ \
     && cd .. \
     && rm -r bamtools/
 
 # ucsc tools
 RUN rsync -aP rsync://hgdownload.cse.ucsc.edu/genome/admin/exe/linux.x86_64/ ucscTools \
-    && cp ucscTools/* /usr/local/bin \
-    && cp ucscTools/blat/blat /usr/local/bin 
-
+    && cp ucscTools/blat/blat /usr/local/bin/ \
+    && rm -rf ucscTools/blat \
+    && cp ucscTools/* /usr/local/bin/
+    
 ### Trimmers
 # trimmomatic
 # run as java -jar `which trimmomatic-0.33.jar`
@@ -134,7 +138,7 @@ RUN wget https://github.com/BenLangmead/bowtie2/archive/v2.2.5.tar.gz \
     && cd .. && rm -r -f bowtie2-2.2.5/ v2.2.5.tar.gz
 
 # STAR
-RUN git clone git@github.com:alexdobin/STAR.git \
+RUN git clone https://github.com/alexdobin/STAR.git \
     && cd STAR/source; make STAR \
     && cp bowtie2* /usr/bin/ \
     && cd .. && rm -r -f bowtie2
@@ -147,7 +151,7 @@ RUN wget http://ccb.jhu.edu/software/hisat/downloads/hisat-0.1.5-beta-Linux_x86_
     && cd .. && rm -r hisat-0.1.5-beta-Linux_x86_64.zip hisat-0.1.5-beta
 
 # TopHat
-#RUN git clone git@github.com:infphilo/tophat.git \
+#RUN git clone https://github.com/infphilo/tophat.git \
 #   &&
 
 ### Transcript quantification
