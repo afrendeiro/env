@@ -51,7 +51,7 @@ RUN pip install pybedtools pysam htseq
 RUN pip install seaborn bokeh lightning-python
 
 ### R
-ENV R_BASE_VERSION 3.1
+ENV R_BASE_VERSION 3.2
 
 ## Now install R and littler, and create a link for littler in /usr/local/bin
 ## Also set a default CRAN repo, and make sure littler knows about it too
@@ -85,11 +85,11 @@ RUN apt-get update \
 #### Bioinformatics tools
 ### General-purpose
 # sambamba
-RUN wget https://github.com/lomereiter/sambamba/releases/download/v0.5.2/sambamba_v0.5.2_linux.tar.bz2 \
-    && tar -xjvf sambamba_v0.5.2_linux.tar.bz2 \
-    && rm sambamba_v0.5.2_linux.tar.bz2 \
-    && chmod +x sambamba_v0.5.2 \
-    && sudo mv sambamba_v0.5.2 /usr/local/bin/sambamba
+RUN wget https://github.com/lomereiter/sambamba/releases/download/v0.6.3/sambamba_v0.6.3_linux.tar.bz2 \
+    && tar -xjvf sambamba_v0.6.3_linux.tar.bz2 \
+    && rm sambamba_v0.6.3_linux.tar.bz2 \
+    && chmod +x sambamba_v0.6.3 \
+    && sudo mv sambamba_v0.6.3 /usr/local/bin/sambamba
 
 # bamtools
 RUN git clone git://github.com/pezmaster31/bamtools.git && cd bamtools \
@@ -140,27 +140,27 @@ RUN wget https://github.com/BenLangmead/bowtie2/archive/v2.2.5.tar.gz \
 # STAR
 RUN git clone https://github.com/alexdobin/STAR.git \
     && cd STAR/source; make STAR \
-    && cp bowtie2* /usr/bin/ \
-    && cd .. && rm -r -f bowtie2
+    && cp STAR /usr/bin/ \
+    && cd ../.. && rm -r -f STAR
 
-# hisat
-RUN wget http://ccb.jhu.edu/software/hisat/downloads/hisat-0.1.5-beta-Linux_x86_64.zip \
-    && unzip hisat-0.1.5-beta-Linux_x86_64.zip \
-    && cd hisat-0.1.5-beta/; make \
-    && cp hisat* /usr/local/bin \
-    && cd .. && rm -r hisat-0.1.5-beta-Linux_x86_64.zip hisat-0.1.5-beta
+# # hisat
+# RUN wget http://ccb.jhu.edu/software/hisat/downloads/hisat-0.1.5-beta-Linux_x86_64.zip \
+#     && unzip hisat-0.1.5-beta-Linux_x86_64.zip \
+#     && cd hisat-0.1.5-beta/; make \
+#     && cp hisat* /usr/local/bin \
+#     && cd .. && rm -r hisat-0.1.5-beta-Linux_x86_64.zip hisat-0.1.5-beta
 
 # TopHat
 #RUN git clone https://github.com/infphilo/tophat.git \
 #   &&
 
 ### Transcript quantification
-# stringTie
-RUN wget http://ccb.jhu.edu/software/stringtie/dl/stringtie-1.0.3.Linux_x86_64.tar.gz \
-    && tar xfz stringtie-1.0.3.Linux_x86_64.tar.gz \
-    && sudo cp stringtie-1.0.3.Linux_x86_64/stringtie /usr/local/bin \
-    && rm stringtie-1.0.3.Linux_x86_64.tar.gz \
-    && rm -r stringtie-1.0.3.Linux_x86_64
+# # stringTie
+# RUN wget http://ccb.jhu.edu/software/stringtie/dl/stringtie-1.0.3.Linux_x86_64.tar.gz \
+#     && tar xfz stringtie-1.0.3.Linux_x86_64.tar.gz \
+#     && sudo cp stringtie-1.0.3.Linux_x86_64/stringtie /usr/local/bin \
+#     && rm stringtie-1.0.3.Linux_x86_64.tar.gz \
+#     && rm -r stringtie-1.0.3.Linux_x86_64
 
 # kallisto
 RUN wget https://github.com/pachterlab/kallisto/releases/download/v0.42.1/kallisto_linux-v0.42.1.tar.gz \
